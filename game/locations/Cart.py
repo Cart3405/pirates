@@ -303,9 +303,9 @@ class TreasureRoom(location.SubLocation):
         print("You have entered the treasure room!")
         time.sleep(1)
         print("You see a chest full of shillings")
-        self.ask_to_take_treasure()
+        self.ask_to_take()
 
-    def ask_to_take_treasure(self):
+    def ask_to_take(self):
         choice = input("Do you take the treasure? (yes/no): ").lower()
         
         if choice == "yes":
@@ -314,7 +314,7 @@ class TreasureRoom(location.SubLocation):
             print("You leave the treasure untouched.")
         else:
             print("Invalid choice")
-            self.ask_to_take_treasure()
+            self.ask_to_take()
 
     def take_treasure(self):
         print("\nYou grab the treasure!")
