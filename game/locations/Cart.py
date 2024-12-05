@@ -302,35 +302,35 @@ class TreasureRoom(location.SubLocation):
     def enter_room(self):
         print("You have entered the treasure room!")
         time.sleep(1)
-        print("You see a shiny treasures")
+        print("You see a chest full of shillings")
         self.ask_to_take_treasure()
 
     def ask_to_take_treasure(self):
-        choice = input("Do you want to take the treasure? (yes/no): ").lower()
+        choice = input("Do you take the treasure? (yes/no): ").lower()
         
         if choice == "yes":
             self.take_treasure()
         elif choice == "no":
-            print("You leave the treasure untouched. Safe, for now.")
+            print("You leave the treasure untouched.")
         else:
-            print("Invalid choice. Try again.")
+            print("Invalid choice")
             self.ask_to_take_treasure()
 
     def take_treasure(self):
-        print("\nYou reach out and grab the treasure!")
+        print("\nYou grab the treasure!")
         time.sleep(2)
 
         self.trap_triggered = random.choice([True, False])
         
         if self.trap_triggered:
-            print("A trap is triggered! You are caught in a deadly snare!")
+            print("A trap is triggered!")
             self.activate_trap()
         else:
             self.treasure_taken = True
-            print("You take the shillings. The room seems to calm down.")
+            print("You take the shillings")
 
     def activate_trap(self):
-        trap_type = random.choice(["poison darts", "falling spikes", "fire burst"])
+        trap_type = random.choice(["poison arrows", "falling spikes", "lava"])
         print(f"The trap releases {trap_type}! You fail to escape!")
         self.game_over = True
         
