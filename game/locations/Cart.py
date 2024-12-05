@@ -332,4 +332,5 @@ class TreasureRoom(location.SubLocation):
     def activate_trap(self):
         trap_type = random.choice(["poison darts", "falling spikes", "fire burst"])
         print(f"The trap releases {trap_type}! You fail to escape!")
+        self.game_over = True
         
