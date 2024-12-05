@@ -11,6 +11,7 @@ import game.combat as combat
 import game.event as event
 import game.items as item
 import random
+import time
 
 ####################################################################################################
 # Events and supporting classes
@@ -294,17 +295,41 @@ def process_verb (self, verb, cmd_list, nouns):
 
 class TreasureRoom(location.SubLocation):
     def __init__(self):
-        self.treasures = ["Shillings"]
-        self.picked_up_treasures = []
+        self.treasure_taken = False
+        self.trap_triggered = False
+        self.treasure = "Shillings"
+    
+    def enter_room(self):
+        print("You have entered the treasure room!")
+        time.sleep(1)
+        print("You see a shiny treasures")
+        self.ask_to_take_treasure()
 
-    def enter():
-        description = "You walk into a room with piles of shillings!"
+    def ask_to_take_treasure(self):
+        choice = input("Do you want to take the treasure? (yes/no): ").lower()
+        
+        if choice == "yes":
+            self.take_treasure()
+        elif choice == "no":
+            print("You leave the treasure untouched. Safe, for now.")
+        else:
+            print("Invalid choice. Try again.")
+            self.ask_to_take_treasure()
 
-    def pick_up_treasure(self, index):
-        if index < 1 or index > len(self.treasures):
-            print("Invalid choice, try again.")
-            return
-        treasure = self.treasures.pop(index - 1)
-        self.picked_up_treasures.append(treasure)
-        config.the_player.add_to_inventory([treasure])
-        print(f"You have picked up the {treasure}.")
+    def take_treasure(self):
+        print("\nYou reach out and grab the treasure!")
+        time.sleep(2)
+
+        self.trap_triggered = random.choice([True, False])
+        
+        if self.trap_triggered:
+            print("A trap is triggered! You are caught in a deadly snare!")
+            self.activate_trap()
+        else:
+            self.treasure_taken = True
+            print("You take the shillings. The room seems to calm down.")
+
+    def activate_trap(self):
+        trap_type = random.choice(["poison darts", "falling spikes", "fire burst"])
+        print(f"The trap releases {trap_type}! You fail to escape!")
+        
