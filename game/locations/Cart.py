@@ -73,7 +73,7 @@ class Golem(combat.Monster):
     def __init__ (self, name):
         attacks = {}
         attacks["smash"] = ["smash",random.randrange(70,101), (30,60)]
-        #75 to 100 hp, smash attack, 50 to 100 speed (100 is "normal")
+        #75 to 100 hp, smash attack, 45 to 75 speed (100 is "normal")
         super().__init__(name, random.randrange(7,20), attacks, 180 + random.randrange(-20,21))
         self.type_name = "Rock Golem"
 
@@ -81,7 +81,7 @@ class Golem2(combat.Monster):
     def __init__ (self, name):
         attacks = {}
         attacks["smash"] = ["smash",random.randrange(90,110), (70,90)]
-        #75 to 100 hp, smash attack, 50 to 100 speed (100 is "normal")
+        #90 to 110 hp, smash attack, 50 to 100 speed (100 is "normal")
         super().__init__(name, random.randrange(8,25), attacks, 250 + random.randrange(-20,21))
         self.type_name = "Cave Golem"
 
@@ -89,9 +89,9 @@ class Boss(combat.Monster):
     def __init__ (self, name):
         attacks = {}
         attacks["Slash"] = ["Slash",random.randrange(120,150), (90,110)]
-        #75 to 100 hp, smash attack, 50 to 100 speed (100 is "normal")
+        #100 to 150 hp, slash attack, 100 to 150 speed (100 is "normal")
         super().__init__(name, random.randrange(10,30), attacks, 550 + random.randrange(-20,21))
-        self.type_name = "Cave Golem"
+        self.type_name = "Cave Boss"
 
 ###########################
 # Rock Golem Room 1
@@ -292,3 +292,19 @@ def process_verb (self, verb, cmd_list, nouns):
 # Treasure Room 5
 ####################
 
+class TreasureRoom(location.SubLocation):
+    def __init__(self):
+        self.treasures = ["Shillings"]
+        self.picked_up_treasures = []
+
+    def enter():
+        description = "You walk into a room with piles of shillings!"
+
+    def pick_up_treasure(self, index):
+        if index < 1 or index > len(self.treasures):
+            print("Invalid choice, try again.")
+            return
+        treasure = self.treasures.pop(index - 1)
+        self.picked_up_treasures.append(treasure)
+        config.the_player.add_to_inventory([treasure])
+        print(f"You have picked up the {treasure}.")
